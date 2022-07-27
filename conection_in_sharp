@@ -1,0 +1,20 @@
+    
+var psi = new ProcessStartInfo();                              ---instanciate an object of ProcessStartInfo()
+psi.FileName = @"C:\path\python.exe";                          ---give a string with the path of the python.exe file
+
+psi.Arguments = "info info2 info3 info4";                      ---in the Arguments we pass the info we want to sent to python, who must be separeted with an " "(space)
+
+psi.UseShellExecute = false;                                   ---|
+psi.CreateNoWindow = true;                                     ---|This 4 lines are default 
+psi.RedirectStandardOutput = true;                             ---|
+psi.RedirectStandardError = true;                              ---|
+
+var errors = "";                                               ---an variable that will return any kind of error
+var results = "";                                              ---will recive the return set in the python function
+
+using (Process process = Process.Start(psi)){                  ---instanciate a process object given the process start info object
+  errors = process.StandardError.ReadToEnd();                  ---assign the errors
+  results = process.StandardOutput.ReadToEnd();                ---assign the return
+}
+MessageBox.Show(results);                                      ---display the reurn
+MessageBox.Show(errors);                                       ---display the errors
